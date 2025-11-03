@@ -1,0 +1,32 @@
+{
+    "files.autoSave": "off",
+    "editor.formatOnSave": false,
+    "[scss]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": "vscode.css-language-features"
+    },
+    "[html]": {
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "files.trimTrailingWhitespace": true,
+    "editor.tabSize": 4,
+    "editor.insertSpaces": true,
+    "editor.detectIndentation": false,
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit",
+    },
+    "workbench.startupEditor": "none",
+    "workbench.iconTheme": "vscode-icons",
+    "javascript.preferences.quoteStyle": "single",
+    "typescript.preferences.quoteStyle": "single",
+    "[typescript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    }
+}
