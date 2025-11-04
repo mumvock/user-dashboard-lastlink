@@ -1,0 +1,125 @@
+// Escala modular baseada nos números da
+// sequência de Fibonacci multiplicados por uma unidade base.
+//
+// IMPORTANTE: Para elementos adjacentes (empilhados), use scale-gap()
+// para evitar que a soma dos paddings quebre a harmonia visual.
+
+// =========================
+// CONFIGURAÇÕES
+// =========================
+$base-unit: .5rem;      // Unidade base da escala (pode ser px, rem, etc.)
+$fib-length: 12;        // Quantidade de valores Fibonacci a gerar
+
+// =========================
+// FUNÇÃO FIBONACCI
+// =========================
+@function fib($n) {
+    @if $n == 0 { @return 0; }
+    @if $n == 1 { @return 1; }
+    @return fib($n - 1) + fib($n - 2);
+}
+
+// =========================
+// GERADOR DE MAPA DE ESCALA
+// =========================
+$scale: ();
+
+// Inicia a partir do 2º termo da Fibonacci (1, 2, 3, 5, ...)
+@for $i from 1 through $fib-length {
+    $fib-index: $i + 1;                     // Desloca a sequência
+    $fib-value: fib($fib-index);            // Pega valores 1, 2, 3, 5...
+    $value: $fib-value * $base-unit;
+    $scale: map-merge($scale, ($i: $value));
+}
+
+// =========================
+// FUNÇÃO DE ACESSO
+// =========================
+@function scale($step) {
+    @return map-get($scale, $step);
+}
+
+/*
+EXEMPLO DE USO - scale($step):
+Para elementos isolados, dimensões e propriedades sem sobreposição:
+
+.modal {
+  padding: scale(5);       // 4rem
+  width: scale(8);         // 17rem
+  height: scale(7);        // 10.5rem
+}
+
+.button {
+  height: scale(4);        // 2.5rem
+  width: scale(6);         // 6.5rem
+  font-size: scale(2);     // 1rem
+  border-radius: scale(1); // 0.5rem
+}
+
+.container {
+  gap: scale(3);           // 1.5rem - flexbox/grid gap não sobrepõe
+  margin-bottom: scale(4); // 2.5rem
+}
+*/
+
+// =========================
+// FUNÇÃO AUXILIAR PARA ELEMENTOS ADJACENTES
+// =========================
+
+// Para espaçamento entre elementos empilhados/adjacentes
+// Usa metade do valor para que a soma visual mantenha a escala
+@function scale-gap($step) {
+    @return map-get($scale, $step) / 2;
+}
+
+/*
+EXEMPLO DE USO - scale-gap($step):
+Para elementos adjacentes onde há sobreposição de espaçamento:
+
+❌ PROBLEMA com scale():
+.card {
+  padding: scale(3);       // 1.5rem cada card
+}
+// Resultado visual: 3rem entre cards (1.5rem + 1.5rem)
+
+✅ SOLUÇÃO com scale-gap():
+.card {
+  padding: scale-gap(3);   // 0.75rem - visual final será 1.5rem
+}
+
+.list-item {
+  padding: scale-gap(4);   // 1.25rem - visual final será 2.5rem
+  margin: scale-gap(2);    // 0.5rem - visual final será 1rem
+}
+
+ESTRATÉGIAS ALTERNATIVAS:
+Combine diferentes escalas para maior flexibilidade:
+
+.card-container {
+  gap: scale(1);           // 0.5rem
+  .card {
+    padding: scale(2);     // 1rem
+  }
+  // Resultado: 1rem + 0.5rem + 1rem = 2.5rem = scale(4)
+}
+*/
+
+// ==============================
+// Proporções (se 1rem === 16px)
+// ==============================
+/*
+| **Scale**| **Fibonacci** | **rem**  | **px**  |
+| -------- | ------------- | -------- | ------- |
+| 1        | 1             | 0.5rem   | 8px     |
+| 2        | 2             | 1rem     | 16px    |
+| 3        | 3             | 1.5rem   | 24px    |
+| 4        | 5             | 2.5rem   | 40px    |
+| 5        | 8             | 4rem     | 64px    |
+| 6        | 13            | 6.5rem   | 104px   |
+| 7        | 21            | 10.5rem  | 168px   |
+| 8        | 34            | 17rem    | 272px   |
+| 9        | 55            | 27.5rem  | 440px   |
+| 10       | 89            | 44.5rem  | 712px   |
+| 11       | 144           | 72rem    | 1152px  |
+| 12       | 233           | 116.5rem | 1864px  |
+*/

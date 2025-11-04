@@ -1,0 +1,35 @@
+/*
+    Mixin para aplicar estilos com base no esquema de cores preferido
+
+    Deve ser usado fora de qualquer escopo/bloco.
+*/
+@mixin apply-color-scheme-styles($mode) {
+
+    @if $mode =='dark' {
+
+        :root[color-scheme='🌑'] {
+            @content;
+        }
+
+        :root[color-scheme='🌐'] {
+
+            @media (prefers-color-scheme: dark) {
+                @content;
+            }
+        }
+    }
+
+    @else if $mode =='light' {
+
+        :root[color-scheme='☀️'] {
+            @content;
+        }
+
+        :root[color-scheme='🌐'] {
+
+            @media (prefers-color-scheme: light) {
+                @content;
+            }
+        }
+    }
+}

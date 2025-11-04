@@ -1,0 +1,45 @@
+@use '@angular/material' as mat;
+@use 'status/all-status-names' as all-status-names;
+
+// Status
+mat-card {
+
+    @each $statusName in all-status-names.$all-status-names {
+        &.#{$statusName}-status {
+            color: var(--#{$statusName}-status);
+
+            @include mat.card-overrides((
+                outlined-outline-color: var(--#{$statusName}-status)
+            ));
+        }
+    }
+}
+
+// Tamanhos
+mat-card,
+mat-card.medium-card {
+    mat-card-content,
+    mat-card-content.mat-mdc-card-content {
+        font-size: var(--mat-sys-body-medium-size);
+        line-height: var(--mat-sys-body-medium-line-height);
+        padding: 12px;
+    }
+}
+
+mat-card.large-card {
+    mat-card-content,
+    mat-card-content.mat-mdc-card-content {
+        font-size: var(--mat-sys-body-large-size);
+        line-height: var(--mat-sys-body-large-line-height);
+        padding: 16px;
+    }
+}
+
+mat-card.small-card {
+    mat-card-content,
+    mat-card-content.mat-mdc-card-content {
+        font-size: var(--mat-sys-body-small-size);
+        line-height: var(--mat-sys-body-small-line-height);
+        padding: 8px;
+    }
+}

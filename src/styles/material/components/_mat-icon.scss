@@ -1,0 +1,47 @@
+:root {
+    --icon-small-size: 16px;
+    --icon-medium-size: 24px;
+    --icon-large-size: 32px;
+    --icon-huge-size: 64px;
+}
+
+$icon-small-size: var(--icon-small-size);
+$icon-medium-size: var(--icon-medium-size);
+$icon-large-size: var(--icon-large-size);
+$icon-huge-size: var(--icon-huge-size);
+
+$icon-small-selector: 'mat-icon.small-icon';
+$icon-medium-selector: 'mat-icon.medium-icon';
+$icon-large-selector: 'mat-icon.large-icon';
+$icon-huge-selector: 'mat-icon.huge-icon';
+
+#{$icon-small-selector} {
+    width: $icon-small-size;
+    height: $icon-small-size;
+    font-size: $icon-small-size;
+}
+
+#{$icon-medium-selector} {
+    width: $icon-medium-size;
+    height: $icon-medium-size;
+    font-size: $icon-medium-size;
+}
+
+#{$icon-large-selector} {
+    width: $icon-large-size;
+    height: $icon-large-size;
+    font-size: $icon-large-size;
+}
+
+#{$icon-huge-selector} {
+    width: $icon-huge-size;
+    height: $icon-huge-size;
+    font-size: $icon-huge-size;
+}
+
+mat-icon {
+    &.mat-icon {
+        overflow: unset;
+    }
+}
+

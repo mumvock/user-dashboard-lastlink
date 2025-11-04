@@ -1,46 +1,102 @@
-// Include theming for Angular Material with `mat.theme()`.
-// This Sass mixin will define CSS variables that are used for styling Angular Material
-// components according to the Material 3 design spec.
-// Learn more about theming and how to use it for your application's
-// custom components at https://material.angular.dev/guide/theming
 @use '@angular/material' as mat;
+@use 'mixins/color-scheme' as color-scheme;
 
-html {
-    @include mat.theme((
-        color: (
-            primary: mat.$azure-palette,
-            tertiary: mat.$blue-palette,
-        ),
-        typography: Roboto,
-        density: 0,
-    ));
+$app-font-family: 'Roboto, "Helvetica Neue", sans-serif';
+
+$light-theme: mat.define-theme((
+    color: (
+        theme-type: light,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+        use-system-variables: true
+    ),
+    typography: (
+        plain-family: #{$app-font-family}
+    ),
+    density: (scale: 0)
+));
+
+$dark-theme: mat.define-theme((
+    color: (
+        theme-type: dark,
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+        use-system-variables: true
+    ),
+    typography: (
+        plain-family: #{$app-font-family}
+    ),
+    density: (scale: 0)
+));
+
+@include mat.core();
+
+:root {
+    // Não sei por que isso sumiu na v20 (raios!!)
+    --mat-sys-corner-extra-large: 28px;
+    --mat-sys-corner-extra-large-top: 28px 28px 0 0;
+    --mat-sys-corner-extra-small: 4px;
+    --mat-sys-corner-extra-small-top: 4px 4px 0 0;
+    --mat-sys-corner-full: 9999px;
+    --mat-sys-corner-large: 16px;
+    --mat-sys-corner-large-end: 0 16px 16px 0;
+    --mat-sys-corner-large-start: 16px 0 0 16px;
+    --mat-sys-corner-large-top: 16px 16px 0 0;
+    --mat-sys-corner-medium: 12px;
+    --mat-sys-corner-none: 0;
+    --mat-sys-corner-small: 8px;
+
+    @include mat.all-component-themes($light-theme);
+    @include mat.system-level-colors($light-theme);
 }
 
-body {
-    // Default the application to a light color theme. This can be changed to
-    // `dark` to enable the dark color theme, or to `light dark` to defer to the
-    // user's system settings.
-    color-scheme: light;
-
-    // Set a default background, font and text colors for the application using
-    // Angular Material's system-level CSS variables. Learn more about these
-    // variables at https://material.angular.dev/guide/system-variables
-    background-color: var(--mat-sys-surface);
-    color: var(--mat-sys-on-surface);
-    font: var(--mat-sys-body-medium);
-
-    // Reset the user agent margin.
-    margin: 0;
+// Aplicação condicional baseada no color-scheme
+@include color-scheme.apply-color-scheme-styles('light') {
+    @include mat.all-component-themes($light-theme);
+    @include mat.system-level-colors($light-theme);
 }
 
-/* You can add global styles to this file, and also import other style files */
+@include color-scheme.apply-color-scheme-styles('dark') {
+    @include mat.all-component-themes($dark-theme);
+    @include mat.system-level-colors($dark-theme);
+
+    // Sobrescrevendo elevações no dark mode
+    :root {
+        --mat-app-level0: 0px 0px 0px 0px rgba(0, 0, 0, .2),
+            0px 0px 0px 0px rgba(0, 0, 0, .14),
+            0px 0px 0px 0px rgba(0, 0, 0, .12);
+
+        --mat-app-level1: 0px 2px 1px -1px rgba(0, 0, 0, .2),
+            0px 1px 1px 0px rgba(0, 0, 0, .14),
+            0px 1px 3px 0px rgba(0, 0, 0, .12);
+
+        --mat-app-level2: 0px 3px 1px -2px rgba(0, 0, 0, .2),
+            0px 2px 2px 0px rgba(0, 0, 0, .14),
+            0px 1px 5px 0px rgba(0, 0, 0, .12);
+
+        --mat-app-level3: 0px 3px 3px -2px rgba(0, 0, 0, .2),
+            0px 3px 4px 0px rgba(0, 0, 0, .14),
+            0px 1px 8px 0px rgba(0, 0, 0, .12);
+
+        --mat-app-level4: 0px 2px 4px -1px rgba(0, 0, 0, .2),
+            0px 4px 5px 0px rgba(0, 0, 0, .14),
+            0px 1px 10px 0px rgba(0, 0, 0, .12);
+
+        --mat-app-level5: 0px 3px 5px -1px rgba(0, 0, 0, .2),
+            0px 5px 8px 0px rgba(0, 0, 0, .14),
+            0px 1px 14px 0px rgba(0, 0, 0, .12);
+    }
+}
 
 html,
 body {
     height: 100%;
+    margin: 0;
 }
 
 body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+    font-family: #{$app-font-family};
+    color-scheme: light dark; // ativa dark/light automaticamente
+    background-color: var(--mat-app-background-color, var(--mat-sys-surface));
+    color: var(--mat-app-text-color, var(--mat-sys-on-surface));
 }

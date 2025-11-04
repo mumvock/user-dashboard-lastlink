@@ -1,0 +1,79 @@
+@mixin primary-opacity($percentage) {
+    --mat-sys-primary-#{$percentage * 100}: color-mix(
+        in srgb,
+        var(--mat-sys-primary) calc(#{$percentage} * 100%),
+        transparent
+    );
+}
+
+@mixin secondary-light-opacity($percentage) {
+    --mat-sys-secondary-light-#{$percentage * 100}: color-mix(
+        in srgb,
+        var(--mat-sys-secondary) calc(var(--mat-sys-hover-state-layer-opacity) * (#{$percentage} * 100%)),
+        transparent
+    );
+}
+
+@mixin background-opacity($percentage) {
+    --mat-sys-background-#{$percentage * 100}: color-mix(
+        in srgb,
+        var(--mat-sys-background) calc(#{$percentage} * 100%),
+        transparent
+    );
+}
+
+@mixin surface-opacity($percentage) {
+    --mat-sys-surface-#{$percentage * 100}: color-mix(
+        in srgb,
+        var(--mat-sys-surface) calc(#{$percentage} * 100%),
+        transparent
+    );
+}
+
+:root {
+    --gray-1000: oklch(16.93% 0 0);
+    --gray-900: oklch(19.37% 0 0);
+    --gray-800: oklch(25.16% 0 0);
+    --gray-700: oklch(36.98% 0 0);
+    --gray-600: oklch(44% 0 0);
+    --gray-500: oklch(54.84% 0 0);
+    --gray-400: oklch(70.9% 0 0);
+    --gray-300: oklch(84.01% 0 0);
+    --gray-200: oklch(91.75% 0 0);
+    --gray-100: oklch(97.12% 0 0);
+    --gray-50: oklch(98.81% 0 0);
+
+    --green-500: #4caf50;
+
+    --red-500: #f44336;
+    --red-700: #c70a1d;
+    --red-800: #721c24;
+
+    --yellow-600: #fdd835;
+    --yellow-700: #fbc02d;
+    --yellow-800: #ebb019;
+
+    --menus-text-color: color-mix(in srgb, var(--mat-sys-primary) 5%, var(--quaternary-contrast));
+
+    @include primary-opacity(.75);
+    @include primary-opacity(.7);
+    @include primary-opacity(.5);
+    @include primary-opacity(.2);
+    @include primary-opacity(.08);
+    @include primary-opacity(.05);
+    @include primary-opacity(.04);
+    @include primary-opacity(.02);
+
+    @include secondary-light-opacity(1);
+    @include secondary-light-opacity(.8);
+    @include secondary-light-opacity(.4);
+
+    @include background-opacity(.8);
+    @include background-opacity(.75);
+    @include background-opacity(.7);
+
+    @include surface-opacity(.8);
+    @include surface-opacity(.7);
+    @include surface-opacity(.6);
+    @include surface-opacity(.5);
+}
