@@ -1,4 +1,7 @@
+import { provideHttpClient } from '@angular/common/http';
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 
 import { UsersInfo } from './users-info';
 
@@ -8,7 +11,12 @@ describe('UsersInfo', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            imports: [UsersInfo]
+            imports: [UsersInfo],
+            providers: [
+                provideZonelessChangeDetection(),
+                provideHttpClient(),
+                provideRouter([])
+            ]
         })
             .compileComponents();
 
