@@ -6,7 +6,10 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --watch=false --browsers=ChromeHeadless"
+    "test": "ng test --watch=false --browsers=ChromeHeadless",
+    "cypress:open": "cypress open",
+    "cypress:run": "cypress run",
+    "cypress:run:quiet": "cypress run --headless --reporter spec > cypress-results.txt"
   },
   "prettier": {
     "printWidth": 100,
@@ -44,6 +47,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "cypress": "^12.17.0"
   }
 }

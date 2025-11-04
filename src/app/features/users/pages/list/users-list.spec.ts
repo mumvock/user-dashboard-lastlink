@@ -102,7 +102,7 @@ describe('UsersList', () => {
         });
 
         it('should return all users when search value is less than minimum length', async () => {
-            const searchValue = 'a';  // Assuming MIN_SEARCH_LENGTH > 1
+            const searchValue = 'a';  // MIN_SEARCH_LENGTH > 1
             searchControl.setValue(searchValue);
 
             await new Promise((res) => setTimeout(res, FRONT_INPUT_DEBOUNCE_TIME));
@@ -124,7 +124,6 @@ describe('UsersList', () => {
         });
 
         it('should maintain state between searches', async () => {
-            // First search
             searchControl.setValue('john');
             await new Promise((res) => setTimeout(res, FRONT_INPUT_DEBOUNCE_TIME));
             fixture.detectChanges();
@@ -132,7 +131,6 @@ describe('UsersList', () => {
             expect(firstResults.length).toBe(1);
             expect(firstResults[0].name.toLowerCase()).toContain('john');
 
-            // Second search
             searchControl.setValue('jane');
             await new Promise((res) => setTimeout(res, FRONT_INPUT_DEBOUNCE_TIME));
             fixture.detectChanges();

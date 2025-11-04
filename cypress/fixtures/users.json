@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "Leanne Graham",
+    "email": "Sincere@april.biz",
+    "company": { "name": "Romaguera-Crona" }
+  },
+  {
+    "id": 2,
+    "name": "Ervin Howell",
+    "email": "Shanna@melissa.tv",
+    "company": { "name": "Deckow-Crist" }
+  }
+]
