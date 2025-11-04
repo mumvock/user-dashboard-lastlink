@@ -1,0 +1,9 @@
+<mat-card appearance="outlined" class="{{ status$$() }}-status">
+    <mat-card-content>
+        <mat-icon class="large-icon">{{ icon$$() }}</mat-icon>
+
+        <div class="texts-wrapper">
+            <ng-content />
+        </div>
+    </mat-card-content>
+</mat-card>
