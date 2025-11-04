@@ -1,59 +1,101 @@
-# UserDashboard
+# User Dashboard — Desafio Lastlink
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.8.
+ - Construído com Angular 20 — adotando boas práticas modernas do framework (Signals, interoperabilidade RxJS ↔ Signals).
+ - UI com Angular Material
+ - Testes E2E com Cypress
+ - Substituto leve de store (cached reactive store) em `src/app/sdk/common/abstracts/store/` (veja `abstract-store.abstract.ts`)
+ - Adoção parcial das [novas convenções de nomenclatura](https://blog.angular.dev/announcing-angular-v20-b5c9c06cf301) de classes e arquivos (algumas mudanças de nomes já aplicadas).
 
-## Development server
+## O que há neste repositório
 
-To start a local development server, run:
+- `src/app/` — código da aplicação dividido em `core`, `features`, `sdk` e `shared`
+- `cypress/` — testes end-to-end e fixtures
+- `styles/` — estilos SCSS e temas
+- `public/`, `environments/` — assets e configurações
 
-```bash
-ng serve
+## Requisitos
+
+- Node.js (22.16+, recomendado LTS)
+
+## Como rodar (Windows / cmd.exe)
+
+1. Instale dependências
+
+```cmd
+npm install
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+2. Executar em modo de desenvolvimento
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```cmd
+npm start
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Abra http://localhost:4200 no navegador. O servidor recarrega automaticamente.
 
-```bash
-ng generate --help
+3. Testes unitários (Karma + ChromeHeadless)
+
+```cmd
+npm run test
 ```
 
-## Building
+4. Testes E2E com Cypress
 
-To build the project run:
-
-```bash
-ng build
+```cmd
+npm run cypress:open   # abre a UI do Cypress
+npm run cypress:run    # executa headless
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+## Scripts úteis (no package.json)
 
-## Running unit tests
+- `start` — ng serve
+- `build` — ng build
+- `test` — ng test (Karma)
+- `cypress:open`, `cypress:run` — Cypress E2E
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+## Arquitetura e decisões importantes
 
-```bash
-ng test
-```
+- Organização modular: `core`, `features`, `sdk`, `shared` — facilita isolamento e testabilidade.
+- Decisão sobre NgRx: optei por não usar NgRx por preferência pessoal — considero-o dispensável e implementei minha própria solução de store leve em `src/app/sdk/common/abstracts/store/abstract-store.abstract.ts`. Ela provê:
+	- comportamento reativo via RxJS (observables)
+	- cache com `DataCache`
+	- política de limpeza automática (`AutoCacheCleaner`)
+	- mecanismos de refresh/reconnect e gerenciamento de estado (initial | loading | success | error...)
+	- é minimalista, com menos boilerplate e projetada para ser evoluída conforme necessário.
 
-## Running end-to-end tests
+## Nota sobre `sdk/` e `core/` — recursos agnósticos
 
-For end-to-end (e2e) testing, run:
+Grande parte do código em `src/app/sdk/` e boa parte de `src/app/core/` são bibliotecas/utilitários agnósticos — coleções de módulos, abstrações e serviços que desenvolvi ao longo de vários projetos. Eles foram projetados para serem reutilizados em diferentes aplicações (não dependem da lógica de negócios desta aplicação) e por isso foram incorporados parcialmente a este repositório para acelerar o desenvolvimento e manter consistência.
 
-```bash
-ng e2e
-```
+O que isso significa:
+- `src/app/sdk/`: contém abstrações genéricas (stores, utilitários de cache, tipos e diretivas) pensadas para uso em múltiplos projetos.
+- `src/app/core/`: contém principalmente componentes, interceptores e handlers que são amplamente reutilizáveis; há exceções específicas que são próprias desta app.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+ ## Padrões adotados
 
-## Additional Resources
+ - Modular Architecture — Arquitetura modular por responsabilidades (`core`, `features`, `sdk`, `shared`).
+ - Feature-first / Domain folders — Organização por feature (cada feature agrupa routes, components, repositories e stores).
+ - Repository Pattern — Repositórios para acesso a dados (`src/app/features/*/repositories/`).
+ - Reactive Store / Observer Pattern — Store reativa custom baseada em `BehaviorSubject`/`Observable` (veja `abstract-store.abstract.ts`).
+ - Cache with Auto-eviction — `DataCache` + `AutoCacheCleaner` para cache, refresh e limpeza automática.
+ - RxJS / Reactive Programming — Uso intensivo de RxJS (operators: `map`, `switchMap`, `distinctUntilChanged`, `shareReplay`, etc.).
+ - Signals Interoperability — `toSignal` / `@angular/core/rxjs-interop` para conectar streams a sinais.
+ - Interceptor / Middleware — Interceptadores HTTP (`api-url`, `http-error`) aplicados via `provideHttpClient` + `withInterceptors`.
+ - Dependency Injection — Uso do DI do Angular para serviços independentes e injetáveis.
+ - Structural Directive — `RepeatDirective` como diretiva estrutural reutilizável.
+ - SCSS Theming & Mixins — Theming com partials, mixins e variáveis CSS (`styles/mixins/`, `styles/_colors.scss`).
+ - Angular Material Design — Uso consistente de componentes Material (`mat-card`, `mat-icon`, `mat-table`, etc.).
+ - Testing: Unit Tests & E2E — Unit (Karma/Jasmine) + E2E (Cypress) e uso de fixtures para testes.
+ - Path Aliases / Tsconfig paths — Aliases para imports (`~core`, `@sdk`, etc.) para melhorar legibilidade.
+ - DRY (Don't Repeat Yourself) — Reuso via `sdk/` e `core/` para evitar duplicação.
+ - SRP (Single Responsibility Principle) — Separação clara de responsabilidades (services, repositories, components, stores).
+ - Convention over Configuration — Convenções como `*-dependencies.ts` para centralizar módulos/providers e facilitar consistência.
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+ ## Onde olhar (arquivos-chave)
+
+ - Store abstrata: `src/app/sdk/common/abstracts/store/abstract-store.abstract.ts`
+ - Features de usuários: `src/app/features/users/` (routes, components, stores, pages)
+ - Interceptadores: `src/app/core/interceptors/`
+ - Componentes compartilhados (loader, skeleton, feedback): `src/app/core/components/` e `src/app/shared/components/`
+ - Testes E2E exemplo: `cypress/e2e/users-list.cy.js`
+
