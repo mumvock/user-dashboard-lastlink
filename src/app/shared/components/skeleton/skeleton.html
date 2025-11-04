@@ -1,0 +1,10 @@
+<div
+    *repeat="repeat()"
+    [ngStyle]="{
+        'height': size() || height(),
+        'width': size() || width(),
+        'border-radius': _borderRadius()
+    }"
+    [ngClass]="skeletonClass()"
+    class="skeleton"
+></div>
