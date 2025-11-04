@@ -1,0 +1,23 @@
+<mat-toolbar>
+    <a matButton routerLink="/users">Users</a>
+
+    <mat-button-toggle-group
+        (change)="colorSchemeService.setCurrentColorScheme($event.value)"
+        [ngModel]="colorSchemeService.currentColorScheme$$()"
+        [hideSingleSelectionIndicator]="true"
+        name="color-scheme"
+    >
+
+        @for (scheme of COLOR_SCHEMES; track scheme) {
+            <mat-button-toggle
+                [value]="scheme"
+                [matTooltip]="scheme.description"
+                matTooltipPosition="above"
+            >
+                <span class="emoji">
+                    {{ scheme.emoji }}
+                </span>
+            </mat-button-toggle>
+        }
+    </mat-button-toggle-group>
+</mat-toolbar>
