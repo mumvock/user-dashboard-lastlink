@@ -1,0 +1,43 @@
+@let user = userInfo$$();
+@let state = userInfoState$$();
+
+@if (state === 'loading' || state === 'initial') {
+    <app-skeleton height="430px" borderRadius="medium" />
+
+} @else if (state === 'error' || state === 'aborted') {
+    <app-feedback-card type="error">
+        <p>We had trouble loading the user information. Please try again in a few moments.</p>
+        <button matButton type="button" (click)="refreshUserInfo()">
+            <mat-icon>refresh</mat-icon>
+            Try again
+        </button>
+    </app-feedback-card>
+
+} @else if (state === 'empty') {
+    <app-feedback-card type="empty">
+        <p>Oops! No user information here so far.</p>
+    </app-feedback-card>
+
+} @else if (state === 'success' && user && user.company) {
+    <mat-card>
+        <mat-card-title>{{ user.name }}</mat-card-title>
+        <mat-card-subtitle>{{ user.username }}</mat-card-subtitle>
+        <mat-card-content>
+            <p>Email: {{ user.email }}</p>
+            <p>Phone: {{ user.phone }}</p>
+            <p>Website: {{ user.website }}</p>
+            <mat-divider></mat-divider>
+            <h3>Address</h3>
+            <p>{{ user.address.street }}, {{ user.address.suite }}</p>
+            <p>{{ user.address.city }} - {{ user.address.zipcode }}</p>
+            <h3>Company</h3>
+            <p>{{ user.company.name }}</p>
+            <p>{{ user.company.catchPhrase }}</p>
+        </mat-card-content>
+    </mat-card>
+}
+
+<a matButton routerLink="../.." class="back-button">
+    <mat-icon>arrow_back</mat-icon>
+    Back
+</a>

@@ -1,0 +1,18 @@
+:host {
+    $table-border-color: var(--mat-table-row-item-outline-color, var(--mat-sys-outline, rgba(0, 0, 0, 0.12)));
+    $table-border-width: var(--mat-table-row-item-outline-width, 1px);
+    $table-border-style: solid;
+
+    .search-skeleton {
+        margin-bottom: 1.25rem;
+        border-bottom-color: $table-border-color;
+        border-bottom-width: $table-border-width;
+        border-bottom-style: $table-border-style;
+    }
+
+    .table-row-skeleton {
+        border-top-color: $table-border-color;
+        border-top-width: $table-border-width;
+        border-top-style: $table-border-style;
+    }
+}

@@ -1,0 +1,29 @@
+@let state = usersState$$();
+
+@if (state === 'loading' || state === 'initial') {
+    <app-skeleton height="56px" borderRadius="none" class="search-skeleton" />
+    <app-skeleton height="56px" borderRadius="none" />
+    <app-skeleton *repeat="10" height="52px" borderRadius="none" class="table-row-skeleton" />
+
+} @else if (state === 'error' || state === 'aborted') {
+    <app-feedback-card type="error">
+        <p>We had trouble loading the users. Please try again in a few moments.</p>
+        <button matButton type="button" (click)="refreshUsers()">
+            <mat-icon>refresh</mat-icon>
+            Try again
+        </button>
+    </app-feedback-card>
+
+} @else if (state === 'empty') {
+    <app-feedback-card type="empty">
+        <p>Oops! No users here so far.</p>
+    </app-feedback-card>
+
+} @else if (state === 'success') {
+    <app-users-list-search #usersListSearch />
+
+    <app-users-list-table
+        [users]="filteredUsers$$()"
+        searchedValue=""
+    />
+}

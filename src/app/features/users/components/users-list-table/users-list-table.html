@@ -1,0 +1,54 @@
+@let data = tableDataSource$$();
+
+<table mat-table [dataSource]="data">
+
+    <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+
+        <td mat-cell *matCellDef="let user">
+            <a
+                matIconButton
+                (click)="goToUserInfo(user)"
+                matTooltip="User info"
+            >
+                <mat-icon>info</mat-icon>
+            </a>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let user">{{ user.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>E-mail</th>
+        <td mat-cell *matCellDef="let user">{{ user.email }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="companyName">
+        <th mat-header-cell *matHeaderCellDef>Company name</th>
+
+        <td mat-cell *matCellDef="let user">
+
+            @let companyName = user?.company?.name;
+
+            @if (companyName?.length) {
+                {{ user.company.name }}
+            }
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">
+            <div class="negative-feedback-wrapper">
+                <mat-icon class="large-icon">indeterminate_question_box</mat-icon>
+                <p>No data matching the filter "{{ searchedValue() }}"</p>
+            </div>
+        </td>
+    </tr>
+
+</table>
