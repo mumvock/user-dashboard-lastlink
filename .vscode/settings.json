@@ -17,7 +17,7 @@
         "source.organizeImports": "explicit",
     },
     "workbench.startupEditor": "none",
-    "workbench.iconTheme": "vscode-icons",
+    "workbench.iconTheme": "material-icon-theme",
     "javascript.preferences.quoteStyle": "single",
     "typescript.preferences.quoteStyle": "single",
     "[typescript]": {
