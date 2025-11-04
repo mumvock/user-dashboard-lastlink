@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
@@ -12,6 +13,7 @@ describe('UserInfoStore', () => {
         mockRepo = jasmine.createSpyObj<UsersRepository>('UsersRepository', ['getUserById$']);
         TestBed.configureTestingModule({
             providers: [
+                provideZonelessChangeDetection(),
                 UserInfoStore,
                 { provide: UsersRepository, useValue: mockRepo },
             ],
