@@ -6,8 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 
 import { ComponentDependencies } from '~shared/common/types';
-import { FeedbackCard } from '~shared/components/feedback-card';
-import { Skeleton } from '~shared/components/skeleton';
+import { FeedbackCard, Skeleton } from '~shared/components';
 
 const USERS_DETAILS_DEPENDENCIES: ComponentDependencies = {
     imports: [

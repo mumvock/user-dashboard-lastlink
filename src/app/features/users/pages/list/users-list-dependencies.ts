@@ -5,8 +5,7 @@ import { UsersListSearch } from '~features/users/components/user-list-search/use
 
 import { UsersListTable } from '~features/users/components/users-list-table/users-list-table';
 import { ComponentDependencies } from '~shared/common/types';
-import { FeedbackCard } from '~shared/components/feedback-card';
-import { Skeleton } from '~shared/components/skeleton';
+import { FeedbackCard, Skeleton } from '~shared/components';
 
 const USERS_LIST_DEPENDENCIES: ComponentDependencies = {
     imports: [
