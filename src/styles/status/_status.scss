@@ -1,14 +1,13 @@
 :root {
-    --success-status: var(--green-500);
-    --warning-status: var(--yellow-800);
-    --error-status: var(--red-700);
+    --success-status: #4caf50;
+    --warning-status: #ebb019;
+    --error-status: #c70a1d;
     --info-status: #36a3f7;
 }
 
 .success-status-color {
     color: var(--success-status);
 }
-
 .success-status {
     background-color: var(--success-status);
     color: white;
@@ -17,7 +16,6 @@
 .warning-status-color {
     color: var(--warning-status);
 }
-
 .warning-status {
     background-color: var(--warning-status);
     color: var(--mat-sys-neutral-variant20);
@@ -26,11 +24,6 @@
 .error-status-color {
     color: var(--error-status);
 }
-
-.darker-error-status-color {
-    color: var(--darker-error-status);
-}
-
 .error-status {
     background-color: var(--error-status);
     color: white;
@@ -39,7 +32,6 @@
 .info-status-color {
     color: var(--info-status);
 }
-
 .info-status {
     background-color: var(--info-status);
     color: white;
@@ -48,7 +40,6 @@
 .purple-status-color {
     color: var(--purple-status);
 }
-
 .purple-status {
     background-color: var(--purple-status);
     color: white;
@@ -57,7 +48,6 @@
 .pending-status-color {
     color: var(--pending-status);
 }
-
 .pending-status {
     background-color: var(--pending-status);
     color: var(--mat-sys-neutral-variant20);
@@ -66,7 +56,6 @@
 .grey-status-color {
     color: var(--grey-status);
 }
-
 .grey-status {
     background-color: var(--grey-status);
     color: var(--mat-sys-neutral-variant20);
