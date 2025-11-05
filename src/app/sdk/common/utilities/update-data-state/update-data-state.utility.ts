@@ -40,6 +40,6 @@ export function UpdateDataState<T>(
 
             throw error;
         }),
-        take(1)
+        take(1) // Garantia que o Observable completará após a primeira emissão, evitando vazamentos de memória
     );
 }
